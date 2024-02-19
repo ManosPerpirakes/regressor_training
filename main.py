@@ -2,6 +2,9 @@ import pandas as pd
 
 def set_data(df1):
     df = pd.read_csv(df1)
+    df[list(pd.get_dummies(df['Neighborhood']).columns)] = pd.get_dummies(df['Neighborhood'])
+    df[list(pd.get_dummies(df['SaleType']).columns)] = pd.get_dummies(df['SaleType'])
+    df[list(pd.get_dummies(df['SaleCondition']).columns)] = pd.get_dummies(df['SaleCondition'])
     df = df.drop([
         "MSZoning",
         "Street",
@@ -66,7 +69,7 @@ X_train = sc.fit_transform(X)
 
 from sklearn.neighbors import KNeighborsRegressor
 
-classiefier = KNeighborsRegressor(n_neighbors=5)
+classiefier = KNeighborsRegressor(n_neighbors=7)
 classiefier.fit(X, y)
 y_pred = classiefier.predict(df_test)
 
